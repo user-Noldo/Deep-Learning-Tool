@@ -1,0 +1,124 @@
+//@version=4
+study("Deep Learning Tool")
+src = close[0]
+
+// Definition : INDICATORS
+
+// RSI
+
+_rsi = rsi(close,14)
+
+// MACD
+
+fun_macd(_src,_fastlen,_slowlen,_signallen) =>
+
+    float _output = na 
+    _macd   = ema(_src,_fastlen) - ema(_src,_slowlen)
+    _signal = ema(_macd , _signallen)
+    _output := _macd - _signal
+
+
+_hist = fun_macd(src,12,26,9)
+
+// MOMENTUM
+
+t_mom = 10
+
+
+f_mom(_src , _length) =>
+
+    _output = 0.00
+    _length_adjusted = _length < 0 ? 0 : _length
+
+    _output := nz((_src / _src[_length_adjusted] ) - 1 ) * 100   
+
+
+mom = f_mom(src , t_mom)
+
+// BOLLINGER BANDS 
+
+length = input(20, minval=1)
+mult = input(2.0, minval=0.001, maxval=50)
+basis = sma(src, length)
+dev = mult * stdev(src, length)
+upper = basis + dev
+lower = basis - dev
+
+
+// CM GUPPY EMA 
+
+len1 = input(3, minval=1, title="Fast EMA 1")
+len2 = input(5, minval=1, title="Fast EMA 2")
+len3 = input(8, minval=1, title="Fast EMA 3")
+len4 = input(10, minval=1, title="Fast EMA 4")
+len5 = input(12, minval=1, title="Fast EMA 5")
+len6 = input(15, minval=1, title="Fast EMA 6")
+//Slow EMA
+len7 = input(30, minval=1, title="Slow EMA 7")
+len8 = input(35, minval=1, title="Slow EMA 8")
+len9 = input(40, minval=1, title="Slow EMA 9")
+len10 = input(45, minval=1, title="Slow EMA 10")
+len11 = input(50, minval=1, title="Slow EMA 11")
+len12 = input(60, minval=1, title="Slow EMA 12")
+
+
+//Fast EMA
+ema1 = ema(src, len1)
+ema2 = ema(src, len2)
+ema3 = ema(src, len3)
+ema4 = ema(src, len4)
+ema5 = ema(src, len5)
+ema6 = ema(src, len6)
+//Slow EMA
+ema7 = ema(src, len7)
+ema8 = ema(src, len8)
+ema9 = ema(src, len9)
+ema10 = ema(src, len10)
+ema11 = ema(src, len11)
+ema12 = ema(src, len12)
+
+
+// DEEP LEARNING INDICATORS
+
+_indicator1 = ((_rsi - _rsi[1] ) / (_rsi[1]))
+_indicator2 = ((volume - volume[1] ) / (volume[1]))
+_indicator3 = ((_hist - _hist[1] ) / (_hist[1]))
+_indicator4 = ((mom - mom[1] ) / (mom[1]))
+_indicator5 = ((lower - lower[1] ) / (lower[1]))
+_indicator6 = ((basis - basis[1] ) / (basis[1]))
+_indicator7 = ((upper - upper[1] ) / (upper[1]))
+
+_indicator8  = ((ema1 - ema1[1] ) / (ema1[1]))
+_indicator9  = ((ema2 - ema2[1] ) / (ema2[1]))
+_indicator10 = ((ema3 - ema3[1] ) / (ema3[1]))
+_indicator11 = ((ema4 - ema4[1] ) / (ema4[1]))
+_indicator12 = ((ema5 - ema5[1] ) / (ema5[1]))
+_indicator13 = ((ema6 - ema6[1] ) / (ema6[1]))
+_indicator14 = ((ema7 - ema7[1] ) / (ema7[1]))
+_indicator15 = ((ema8 - ema8[1] ) / (ema8[1]))
+_indicator16 = ((ema9 - ema9[1] ) / (ema9[1]))
+_indicator17 = ((ema10 - ema10[1] ) / (ema10[1]))
+_indicator18 = ((ema11 - ema11[1] ) / (ema11[1]))
+_indicator19 = ((ema12 - ema12[1] ) / (ema12[1]))
+
+// PLOT DATA 
+
+plot(_indicator1 , color = color.aqua    , title = "RSI CHG")
+plot(_indicator2 , color = color.blue    , title = "VOL CHG")
+plot(_indicator3 , color = color.fuchsia , title = "MACD CHG")
+plot(_indicator4 , color = color.gray    , title = "MOM CHG")
+plot(_indicator5 , color = color.green   , title = "BBL CHG")
+plot(_indicator6 , color = color.lime    , title = "BBM CHG")
+plot(_indicator7 , color = color.maroon  , title = "BBU CHG")
+plot(_indicator8 , color = color.navy    , title = "EMA1 CHG")
+plot(_indicator9 , color = color.olive   , title = "EMA2 CHG")
+plot(_indicator10 , color = color.orange , title = "EMA3 CHG")
+plot(_indicator11 , color = color.purple , title = "EMA4 CHG")
+plot(_indicator12 , color = color.red    , title = "EMA5 CHG")
+plot(_indicator13 , color = color.silver , title = "EMA6 CHG")
+plot(_indicator14 , color = color.teal   , title = "EMA7 CHG")
+plot(_indicator15 , color = color.white  , title = "EMA8 CHG")
+plot(_indicator16 , color = color.yellow , title = "EMA9 CHG")
+plot(_indicator17 , color = color.red    , title = "EMA10 CHG")
+plot(_indicator18 , color = #DCD0FF      , title = "EMA11 CHG")
+plot(_indicator19 , color = #F8DE7E      , title = "EMA12 CHG")
