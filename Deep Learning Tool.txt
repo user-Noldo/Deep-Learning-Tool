@@ -100,6 +100,7 @@ _indicator16 = ((ema9 - ema9[1] ) / (ema9[1]))
 _indicator17 = ((ema10 - ema10[1] ) / (ema10[1]))
 _indicator18 = ((ema11 - ema11[1] ) / (ema11[1]))
 _indicator19 = ((ema12 - ema12[1] ) / (ema12[1]))
+_indicator20 = ((src - src[1]) / (src[1]))
 
 // PLOT DATA 
 
@@ -122,3 +123,4 @@ plot(_indicator16 , color = color.yellow , title = "EMA9 CHG")
 plot(_indicator17 , color = color.red    , title = "EMA10 CHG")
 plot(_indicator18 , color = #DCD0FF      , title = "EMA11 CHG")
 plot(_indicator19 , color = #F8DE7E      , title = "EMA12 CHG")
+plot(_indicator20 , color = color.white      , title = "PRICE CHG")
